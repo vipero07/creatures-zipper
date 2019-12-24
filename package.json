@@ -1,6 +1,6 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "zip-compiler",
+  "description": "Compiles Zip files into their designated folders for Creates Games.",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",

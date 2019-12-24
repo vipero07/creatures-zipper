@@ -34,3 +34,24 @@ code {
 		font-size: 16px;
 	}
 }
+
+button {
+    border: 1px #149ca2 solid;
+    color: #149ca2;
+    border-radius: 3px;
+    background: none;
+    font-size: 1.25em;
+}
+
+button:not([disabled]) {
+	cursor: pointer;
+}
+
+.button--reset {
+	border: none;
+	color: #a21b14;
+}
+
+.text--light {
+	color: #aaa;
+}

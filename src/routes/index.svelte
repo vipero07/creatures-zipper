@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import FileUpload from "sveltefileuploadcomponent";
 
-  import { locations } from "../_stores.js";
+  import { locations } from "../stores.js";
 
   let compiledZip;
   let fileStructure = new Map();

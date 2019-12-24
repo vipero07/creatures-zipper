@@ -1,5 +1,5 @@
 <script>
-  import { defaultLocations } from "../_stores.js";
+  import { defaultLocations } from "../stores.js";
   import GameLink from "./GameLink.svelte";
 </script>
 

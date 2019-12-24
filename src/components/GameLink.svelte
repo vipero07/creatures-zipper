@@ -1,5 +1,5 @@
 <script>
-  import { game, defaultLocations, locations } from "../_stores.js";
+  import { game, defaultLocations, locations } from "../stores.js";
 
   export let name;
   export let folders = defaultLocations;

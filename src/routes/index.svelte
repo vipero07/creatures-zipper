@@ -17,7 +17,6 @@
 
   function fileInput(result) {
     result.detail.files.forEach(loadFileIntoZip);
-    fileStructure = fileStructure;
   }
 
   function trimBefore(last, str) {
@@ -38,6 +37,7 @@
     getFileMap(gameMap, folder).set(fileName, originalFile || fileName);
 
     compiledZip.file(`${$locations.game}\\${folder}\\${fileName}`, file);
+    fileStructure = fileStructure;
   }
 
   async function loadFileIntoZip(originalFile) {

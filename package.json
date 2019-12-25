@@ -1,7 +1,7 @@
 {
   "name": "zip-compiler",
   "description": "Compiles Zip files into their designated folders for Creatures Games.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",

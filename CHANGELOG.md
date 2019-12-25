@@ -1,5 +1,8 @@
 # Zip Compiler Changelog
 
+## 0.2.1
+* fix for async updates not affecting the page
+
 ## 0.2.0
 * some minor refactoring
 * improved styles for clarity

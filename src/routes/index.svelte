@@ -17,28 +17,43 @@
 
   function fileInput(result) {
     result.detail.files.forEach(loadFileIntoZip);
+    fileStructure = fileStructure;
   }
 
   function trimBefore(last, str) {
     return str.slice(str.lastIndexOf(last) + 1);
   }
 
-  function updateFolderStructure(game, folder, fileName, zipName) {
-    if (!fileStructure.has(game)) {
-      fileStructure.set(game, new Map());
-    }
-
-    const gameMap = fileStructure.get(game);
-    if (!gameMap.has(folder)) {
-      gameMap.set(folder, new Map());
-    }
-
-    const folderMap = gameMap.get(folder);
-    folderMap.set(fileName, zipName);
+  function getFileMap(parentMap, key) {
+    return parentMap.get(key) || parentMap.set(key, new Map()).get(key);
   }
 
-  async function loadFileIntoZip(zipfile) {
-    const zip = await JSZip.loadAsync(zipfile);
+  function addFileToZip({ fileName, extension, file, originalFile }) {
+    const folder = $locations[extension];
+    if (!folder) {
+      return;
+    }
+
+    const gameMap = getFileMap(fileStructure, $locations.game);
+    getFileMap(gameMap, folder).set(fileName, originalFile || fileName);
+
+    compiledZip.file(`${$locations.game}\\${folder}\\${fileName}`, file);
+  }
+
+  async function loadFileIntoZip(originalFile) {
+    const { name: originalName } = originalFile;
+    const inputExtension = trimBefore(".", originalName);
+
+    if (inputExtension !== "zip") {
+      addFileToZip({
+        fileName: originalName,
+        extension: inputExtension,
+        file: await originalFile.arrayBuffer()
+      });
+      return;
+    }
+
+    const zip = await JSZip.loadAsync(originalFile);
     zip.forEach(async (path, file) => {
       if (file.dir) {
         return;
@@ -46,20 +61,14 @@
 
       const fileName = trimBefore("/", path);
       const extension = trimBefore(".", fileName);
-      const folder = $locations[extension];
 
-      if (!folder) {
-        return;
-      }
-      updateFolderStructure($locations.game, folder, fileName, zipfile.name);
-
-      compiledZip.file(
-        `${$locations.game}\\${folder}\\${fileName}`,
-        await file.async("Uint8Array")
-      );
+      addFileToZip({
+        fileName,
+        extension,
+        file: await file.async("Uint8Array"),
+        originalFile: originalName
+      });
     });
-
-    fileStructure = fileStructure;
   }
 
   async function download() {
@@ -77,16 +86,18 @@
     margin: 0 0 0.5em 0;
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: 522px) {
     h1 {
       font-size: 4em;
     }
   }
+
   .file-uploader {
     display: block;
     border: #aaa dashed 2px;
     padding: 10px;
   }
+
   .buttons {
     display: flex;
     margin-top: 6px;

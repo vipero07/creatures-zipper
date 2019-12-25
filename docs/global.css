@@ -36,11 +36,15 @@ code {
 }
 
 button {
-    border: 1px #149ca2 solid;
+    border: none;
     color: #149ca2;
     border-radius: 3px;
     background: none;
     font-size: 1.25em;
+}
+
+button[disabled]{
+	color: #aaa;
 }
 
 button:not([disabled]) {
@@ -48,7 +52,6 @@ button:not([disabled]) {
 }
 
 .button--reset {
-	border: none;
 	color: #a21b14;
 }
 

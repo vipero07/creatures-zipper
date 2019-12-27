@@ -1,5 +1,9 @@
 # Zip Compiler Changelog
 
+## 0.3.1
+
+- corrected folders to use / instead of \
+
 ## 0.3.0
 
 - Changed readme to correctly address content

@@ -37,7 +37,7 @@
     const gameMap = getFileMap(fileStructure, $locations.game);
     getFileMap(gameMap, folder).set(fileName, originalFile || fileName);
 
-    compiledZip.file(`${$locations.game}\\${folder}\\${fileName}`, file);
+    compiledZip.file(`${$locations.game}/${folder}/${fileName}`, file);
     fileStructure = fileStructure;
   }
 

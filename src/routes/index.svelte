@@ -1,80 +1,52 @@
 <script>
-  import { onMount } from "svelte";
   import FileUpload from "sveltefileuploadcomponent";
 
-  import { locations } from "../stores.js";
+  import { locations, zip } from "../stores.js";
+  import { trimBefore } from "../utils/zip-builder.mjs";
   import DisplayGame from "../components/DisplayGame.svelte";
 
-  let compiledZip;
   let isMac = false;
-  let fileStructure = new Map();
 
   function newZip() {
-    compiledZip = new JSZip();
-    fileStructure = new Map();
+    zip.reset();
   }
-
-  onMount(newZip);
 
   function fileInput(result) {
     result.detail.files.forEach(loadFileIntoZip);
   }
 
-  function trimBefore(last, str) {
-    return str.slice(str.lastIndexOf(last) + 1);
-  }
-
-  function getFileMap(parentMap, key) {
-    return parentMap.get(key) || parentMap.set(key, new Map()).get(key);
-  }
-
-  function addFileToZip({ fileName, extension, file, originalFile }) {
-    const folder = $locations[extension];
-    if (!folder) {
-      return;
-    }
-
-    const gameMap = getFileMap(fileStructure, $locations.game);
-    getFileMap(gameMap, folder).set(fileName, originalFile || fileName);
-
-    compiledZip.file(`${$locations.game}/${folder}/${fileName}`, file);
-    fileStructure = fileStructure;
-  }
-
   async function loadFileIntoZip(originalFile) {
-    const { name: originalName } = originalFile;
-    const inputExtension = trimBefore(".", originalName);
+    const { name } = originalFile;
+    const inputExtension = trimBefore(".", name);
 
     if (inputExtension !== "zip") {
-      addFileToZip({
-        fileName: originalName,
-        extension: inputExtension,
-        file: await originalFile.arrayBuffer()
+      zip.add({
+        file: originalFile.arrayBuffer(),
+        game: $locations.game,
+        originalPath: name,
+        locations: $locations
       });
       return;
     }
 
-    const zip = await JSZip.loadAsync(originalFile);
-    zip.forEach(async (path, file) => {
+    const extractedZip = await JSZip.loadAsync(originalFile);
+    extractedZip.forEach((path, file) => {
       if (file.dir || (!isMac && path.indexOf("__MACOSX") !== -1)) {
         return;
       }
 
-      const fileName = trimBefore("/", path);
-      const extension = trimBefore(".", fileName);
-
-      addFileToZip({
-        fileName,
-        extension,
-        file: await file.async("Uint8Array"),
-        originalFile: originalName
+      zip.add({
+        file: file.async("Uint8Array"),
+        game: $locations.game,
+        originalPath: path,
+        locations: $locations,
+        originName: name
       });
     });
   }
 
   async function download() {
-    const base64 = await compiledZip.generateAsync({ type: "base64" });
-    window.location = "data:application/zip;base64," + base64;
+    window.location = "data:application/zip;base64," + (await zip.build());
   }
 </script>
 
@@ -125,7 +97,7 @@
 </FileUpload>
 
 <div class="buttons">
-  <button disabled={fileStructure.size === 0} on:click={download} type="button">
+  <button disabled={$zip.size === 0} on:click={download} type="button">
     Download
   </button>
   <label
@@ -137,6 +109,6 @@
   <button on:click={newZip} type="button" class="button--reset">Reset</button>
 </div>
 
-{#each [...fileStructure] as [gameName, game] (gameName)}
-  <DisplayGame {gameName} {game} />
+{#each [...$zip] as [gameName, games] (gameName)}
+  <DisplayGame {gameName} games={[...games]} />
 {/each}

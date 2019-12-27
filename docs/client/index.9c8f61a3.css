@@ -1,4 +1,5 @@
 input.svelte-159k8ii{position:absolute !important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px, 1px, 1px, 1px);white-space:nowrap}label.svelte-159k8ii:hover{cursor:pointer}
+.file-info.svelte-13z0dvs{position:relative;margin-bottom:10px}.file-name.svelte-13z0dvs{max-width:75%;text-overflow:ellipsis;overflow:hidden}select.svelte-13z0dvs{display:block;width:calc(100% - 10px);margin-left:10px}button.svelte-13z0dvs{position:absolute;top:0;right:0;padding:0}
 .file-section.svelte-15jawgg{padding-left:10px}
-.game-section.svelte-2om3na{display:flex;flex-wrap:wrap;justify-content:space-between}h2.svelte-2om3na{margin:0.5em 0;font-weight:bold}
+h2.svelte-600m6u{margin:0.5em 0;font-weight:bold}
 h1.svelte-qs5kv1{text-align:center;font-size:2.8em;text-transform:uppercase;font-weight:700;margin:0 0 0.5em 0}@media(min-width: 522px){h1.svelte-qs5kv1{font-size:4em}}.file-uploader.svelte-qs5kv1{display:block;border:#aaa dashed 2px;padding:10px}.buttons.svelte-qs5kv1{display:flex;margin-top:6px;justify-content:space-evenly}

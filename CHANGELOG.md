@@ -1,5 +1,12 @@
 # Zip Compiler Changelog
 
+## 0.4.0
+
+- refactored zipper to defer zipping mechanism ([Milestone 1](https://github.com/vipero07/creatures-zipper/milestone/1))
+- added ability to pick which file you want to use if multiples come from alternative sources ([#4](https://github.com/vipero07/creatures-zipper/issues/4))
+- added ability to remove files ([#5](https://github.com/vipero07/creatures-zipper/issues/5))
+- basic layout changes to make finding things and altering things easier (including sorting the folder contents).
+
 ## 0.3.1
 
 - corrected folders to use / instead of \

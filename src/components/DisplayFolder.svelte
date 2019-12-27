@@ -1,6 +1,8 @@
 <script>
+  import DisplayFile from "./DisplayFile.svelte";
+
   export let folderName;
-  export let folder;
+  export let folders;
 </script>
 
 <style>
@@ -9,14 +11,11 @@
   }
 </style>
 
-<div class="folder-section">
-  <h3>{folderName}</h3>
+<h3>{folderName}</h3>
+<div class="folder-section masonry">
   <div class="file-section">
-    {#each [...folder] as [fileName, originalZip] (fileName)}
-      <div>
-        {fileName}
-        <span class="text--light">{originalZip}</span>
-      </div>
+    {#each folders as [fileName, files] (fileName)}
+      <DisplayFile {fileName} files={[...files]} />
     {/each}
   </div>
 </div>

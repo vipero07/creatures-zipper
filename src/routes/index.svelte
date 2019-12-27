@@ -6,6 +6,7 @@
   import DisplayGame from "../components/DisplayGame.svelte";
 
   let compiledZip;
+  let isMac = false;
   let fileStructure = new Map();
 
   function newZip() {
@@ -55,7 +56,7 @@
 
     const zip = await JSZip.loadAsync(originalFile);
     zip.forEach(async (path, file) => {
-      if (file.dir) {
+      if (file.dir || (!isMac && path.indexOf("__MACOSX") !== -1)) {
         return;
       }
 
@@ -127,6 +128,12 @@
   <button disabled={fileStructure.size === 0} on:click={download} type="button">
     Download
   </button>
+  <label
+    title="This doesn't guarentee Mac compatibility, it only removes or allows
+    designated mac files.">
+    Mac OSX
+    <input type="checkbox" bind:checked={isMac} />
+  </label>
   <button on:click={newZip} type="button" class="button--reset">Reset</button>
 </div>
 

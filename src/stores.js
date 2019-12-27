@@ -1,16 +1,6 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const game = writable('Creatures 3');
+import { creatures3Locations } from "./locations";
 
-export const defaultLocations = {
-    game: 'Creatures 3',
-    agents: 'My Agents',
-    c16: 'Images',
-    s16: 'Images',
-    cos: 'Bootstrap/001 World',
-    catalogue: 'Catalogue',
-    mng: 'Sounds',
-    wav: 'Sounds',
-};
-
-export const locations = writable(defaultLocations);
+export const game = writable("Creatures 3");
+export const locations = writable(creatures3Locations);

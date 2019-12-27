@@ -1,8 +1,8 @@
 <script>
-  import { game, defaultLocations, locations } from "../stores.js";
+  import { game, locations } from "../stores.js";
 
   export let name;
-  export let folders = defaultLocations;
+  export let folders;
 
   $: selected = $game === name;
 

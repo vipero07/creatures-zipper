@@ -1,6 +1,7 @@
 <script>
-  import { defaultLocations } from "../stores.js";
   import GameLink from "./GameLink.svelte";
+
+  import { dockingStationLocations, creatures3Locations } from "../locations";
 </script>
 
 <style>
@@ -25,9 +26,7 @@
 
 <nav>
   <ul>
-    <GameLink name="Creatures 3" />
-    <GameLink
-      name="Docking Station"
-      folders={{ ...defaultLocations, game: 'Docking Station', cos: 'Bootstrap/010 Docking Station' }} />
+    <GameLink name="Creatures 3" folders={creatures3Locations} />
+    <GameLink name="Docking Station" folders={dockingStationLocations} />
   </ul>
 </nav>
